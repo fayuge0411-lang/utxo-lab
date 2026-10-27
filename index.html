@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>UTXO 交互实验室</title>
+<style>
+:root{color-scheme:light;font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}*{box-sizing:border-box}body{margin:0;background:#f6f8fb;color:#182235;font-size:14px}.app{max-width:930px;margin:auto;padding:17px}.hero{background:#182a44;color:white;padding:22px;border-radius:18px}.eyebrow{font-size:10px;letter-spacing:1.3px;color:#aebfd3;font-weight:750}.hero h1{margin:8px 0;font-size:24px;line-height:1.35}.hero p{margin:0;color:#d8e2ef;line-height:1.7}.tag{display:inline-block;border:1px solid #506179;border-radius:20px;padding:4px 10px;color:#d2deef;font-size:11px;margin-top:14px}.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:13px 0}.stat,.panel{background:#fff;border:1px solid #e5eaf1;border-radius:14px}.stat{padding:14px}.stat span{color:#64748b;font-size:11px}.stat strong{display:block;margin-top:5px;font-size:21px;letter-spacing:-.6px}.stat small{font-size:11px;color:#6d7c90}.panel{padding:17px;margin-bottom:12px}.sectionhead{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px}.sectionhead h2{font-size:15px;margin:0}.muted{color:#64748b}.tiny{font-size:11px;line-height:1.55}.tabs{display:flex;background:#e8eef6;border-radius:11px;padding:4px;gap:5px;margin:12px 0}.tab{flex:1;background:transparent;color:#506176;border:0;padding:10px;font-weight:700;border-radius:8px;cursor:pointer}.tab.active{background:#fff;color:#162a49;box-shadow:0 1px 5px #23395a20}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.example{display:flex;gap:9px;align-items:flex-start;padding:13px;text-align:left;border:1px solid #e1e8f0;border-radius:11px;background:#fafcff;cursor:pointer;color:#17283f}.example:hover{border-color:#7b9cce;background:#f2f7ff}.circle{width:24px;height:24px;border-radius:50%;background:#dce8fb;color:#234f8b;font-weight:800;display:grid;place-items:center;flex-shrink:0}.example b{display:block;font-size:13px}.example small{display:block;color:#64748b;line-height:1.5;margin-top:4px}.ledger{display:flex;flex-direction:column;gap:8px}.coin{display:flex;align-items:center;gap:12px;padding:10px 12px;background:#f7f9fc;border:1px solid #e8edf4;border-radius:10px}.coin .bubble{width:34px;height:34px;flex-shrink:0;background:#e4eaf6;border-radius:10px;display:grid;place-items:center;font-weight:750;color:#31517e}.coin .meta{min-width:0;flex:1}.coin .meta small{display:block;color:#7b8795;margin-top:3px;font-size:11px;overflow-wrap:anywhere}.coin .amount{font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}.coin .owner{font-size:10px;color:#3d5670;background:#edf3fb;padding:4px 7px;border-radius:9px}.empty{padding:16px;text-align:center;color:#7c8795;background:#f7f9fc;border-radius:8px}.result{border-left:4px solid #d3dde9;background:#f3f6fa;border-radius:10px;padding:12px 14px;line-height:1.7}.result.good{border-color:#18a16a;background:#edf9f3}.result.bad{border-color:#e06464;background:#fff3f2}.result b{display:block;margin-bottom:3px}.log{display:flex;flex-direction:column;gap:7px;max-height:160px;overflow:auto;margin-top:8px}.logitem{font-size:12px;background:#f7f9fc;border-radius:8px;padding:9px 10px;border:1px solid #e8eef5}.logitem .ok{color:#0c8952}.logitem .no{color:#c74040}.rowline{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:12px}.btn{border:0;border-radius:10px;padding:11px 15px;font-weight:750;cursor:pointer;font-size:13px}.primary{background:#1d4f94;color:white}.secondary{background:#eaf1fa;color:#21466f}.ghost{background:transparent;border:1px solid #ced8e5;color:#3b516d}.btn:disabled{opacity:.45;cursor:not-allowed}.controlgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{min-width:0}.field label{display:block;color:#526276;font-weight:650;font-size:12px;margin-bottom:6px}.field select,.field input{width:100%;background:#fff;border:1px solid #cbd6e3;padding:10px;border-radius:9px;color:#15283e;font-size:14px}.field select:focus,.field input:focus{outline:2px solid #7aa6ec;outline-offset:1px}.inputs{display:flex;flex-wrap:wrap;gap:7px;margin:9px 0}.check{display:flex;align-items:center;gap:6px;border:1px solid #d4dfeb;background:#fff;padding:8px 11px;border-radius:9px;cursor:pointer}.check input{accent-color:#285fa8}.flow{display:grid;grid-template-columns:1fr 28px 1fr;align-items:center;gap:6px;margin:12px 0}.flowpart{background:#f7f9fc;border:1px solid #e3eaf2;border-radius:10px;padding:12px;text-align:center}.flowpart small{display:block;color:#708096;font-size:11px}.flowpart b{display:block;font-size:18px;margin:5px}.flowarrow{text-align:center;color:#798da8;font-size:20px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.signmark{background:#f4f7fc;color:#546b87;padding:10px;border-radius:9px;font-size:11px;overflow-wrap:anywhere;margin-top:8px}.foot{line-height:1.65;color:#66778c;font-size:11px;padding:3px 5px 14px}.hide{display:none!important}@media(max-width:600px){.app{padding:8px}.hero{padding:18px}.hero h1{font-size:20px}.stats{gap:6px}.stat{padding:10px}.stat strong{font-size:16px}.panel{padding:13px}.two{grid-template-columns:1fr}.controlgrid{grid-template-columns:1fr 1fr;gap:10px}.coin .owner{display:none}.btn{flex:1}}
+</style></head><body><main class="app" id="sim">
+<section class="hero"><div class="eyebrow">STARK OS / WEB3 LAB · LESSON 07</div><h1>比特币 UTXO 互动实验室</h1><p>亲手试试：合法转账、篡改收款人、重复花费、盗用别人的币。</p><span class="tag">教学模拟 · 不使用真实BTC或私钥</span></section>
+<div class="stats"><div class="stat"><span>我可花费的余额</span><strong id="myBal">0.800</strong><small>BTC</small></div><div class="stat"><span>小王可花费的余额</span><strong id="wangBal">0.000</strong><small>BTC</small></div><div class="stat"><span>当前 UTXO</span><strong id="count">2</strong><small>个未花费输出</small></div></div>
+<section class="panel"><div class="sectionhead"><h2>当前账本 · UTXO Set</h2><button class="btn ghost" id="reset">↺ 重置</button></div><div id="ledger" class="ledger"></div></section>
+<div class="tabs"><button class="tab active" id="tabExamples">四个经典实验</button><button class="tab" id="tabFree">自由模拟交易</button></div>
+<section class="panel" id="examples"><div class="sectionhead"><h2>点击任一实验，立即观察账本变化</h2></div><div class="two">
+<button class="example" data-case="tamper"><span class="circle">1</span><span><b>篡改收款人</b><small>用正确私钥签名后，再偷偷把小王改为黑客</small></span></button>
+<button class="example" data-case="legit"><span class="circle">2</span><span><b>合法转账</b><small>我支付0.6 BTC给小王，找零0.199 BTC</small></span></button>
+<button class="example" data-case="double"><span class="circle">3</span><span><b>重复花费</b><small>先合法支付，再次花费已经用掉的旧UTXO</small></span></button>
+<button class="example" data-case="steal"><span class="circle">4</span><span><b>盗用小王的币</b><small>我用自己的签名，尝试花费小王的UTXO</small></span></button>
+</div></section>
+<section class="panel hide" id="free"><div class="sectionhead"><h2>自己构造一笔交易</h2><span class="muted tiny">先签名，再试着篡改</span></div>
+<div class="field"><label>选择要花费的UTXO（可多选）</label><div class="inputs" id="inputChoices"></div></div>
+<div class="controlgrid">
+<div class="field"><label>收款人</label><select id="recipient"><option value="小王">小王</option><option value="我">我</option><option value="黑客">黑客</option></select></div>
+<div class="field"><label>使用谁的私钥签名（模拟）</label><select id="signer"><option value="我">我的私钥</option><option value="小王">小王的私钥</option><option value="黑客">黑客的私钥</option></select></div>
+<div class="field"><label>付款金额（BTC）</label><input id="value" type="number" min="0.001" step="0.001" value="0.6"/></div>
+<div class="field"><label>手续费（BTC）</label><input id="fee" type="number" min="0" step="0.0001" value="0.001"/></div>
+</div>
+<div class="flow"><div class="flowpart"><small>输入总额</small><b id="previewIn">0.800</b><small>BTC</small></div><div class="flowarrow">→</div><div class="flowpart"><small>支付 / 找零 / 手续费</small><b id="previewOut" style="font-size:14px">0.600 / 0.199 / 0.001</b><small>BTC</small></div></div>
+<div class="signmark" id="signStatus">尚未签名。请先点击“用所选私钥签名”。</div>
+<div class="actions"><button class="btn primary" id="sign">① 用所选私钥签名</button><button class="btn secondary" id="tamper">② 将收款人改为黑客</button><button class="btn ghost" id="submit">③ 验证并提交</button></div>
+</section>
+<section class="panel"><div class="sectionhead"><h2>节点验证结果</h2><span class="muted tiny">每次操作均有记录</span></div><div id="result" class="result"><b>准备就绪</b>点击上方实验，观察节点如何判断交易。</div><div class="log" id="log"></div></section>
+<div class="foot"><b>重要说明：</b>这是一套可交互的规则模拟器，展示UTXO花费条件与“签名绑定交易内容”的概念。签名采用快照校验来模拟验签结果，<b>没有运行真实的 secp256k1 / ECDSA 密码学计算</b>；交易ID也是模拟标识。真实比特币还包括脚本、交易序列化、内存池、工作量证明与全网共识。</div>
+</main><script>
+(function(){
+ const $=id=>document.getElementById(id);
+ const S=100000000;
+ const n=x=>Math.round(Number(x)*S);
+ const f=x=>(x/S).toFixed(3);
+ const initial=()=>[{id:'txA:0',owner:'我',sat:n(.3)},{id:'txB:0',owner:'我',sat:n(.5)}];
+ let coins=initial(), serial=1, signed=null, logItems=[], selected=['txA:0','txB:0'];
+ function payload(inputs,to,amount,fee,signer){const total=inputs.reduce((v,id)=>v+(coins.find(c=>c.id===id)?.sat||0),0);return {inputs:[...inputs],outputs:[{owner:to,sat:amount},...(total-amount-fee>0?[{owner:signer,sat:total-amount-fee}]:[])],fee};}
+ const stamp=p=>JSON.stringify(p);
+ function verdict(ok,message){$('result').className='result '+(ok?'good':'bad');$('result').innerHTML='<b>'+(ok?'✓ 交易接受':'✕ 交易拒绝')+'</b>'+message;logItems.unshift({ok,message});$('log').innerHTML=logItems.slice(0,7).map((x,i)=>'<div class="logitem"><b class="'+(x.ok?'ok':'no')+'">'+(x.ok?'✓ 通过':'✕ 拒绝')+'</b> '+x.message+'</div>').join('');}
+ function apply(tx,proof){
+  if(!tx.inputs.length||new Set(tx.inputs).size!==tx.inputs.length) return {ok:false,reason:'交易输入为空，或同一个UTXO重复引用。'};
+  for(const id of tx.inputs){if(!coins.find(c=>c.id===id)) return {ok:false,reason:'输入 '+id+' 不存在或已经花费，不能重复支付。'};}
+  if(!tx.outputs.length||tx.outputs.some(x=>!Number.isInteger(x.sat)||x.sat<=0)||!Number.isInteger(tx.fee)||tx.fee<0) return {ok:false,reason:'输出或手续费金额不合法。'};
+  const total=tx.inputs.reduce((v,id)=>v+coins.find(c=>c.id===id).sat,0);const out=tx.outputs.reduce((v,x)=>v+x.sat,0);
+  if(out+tx.fee!==total) return {ok:false,reason:'输入总金额不等于输出总金额加手续费。'};
+  if(!proof||proof.content!==stamp(tx)) return {ok:false,reason:'签名不匹配：交易内容在签名后发生变化（或尚未签名）。'};
+  for(const id of tx.inputs){const utxo=coins.find(c=>c.id===id);if(utxo.owner!==proof.signer)return {ok:false,reason:'签名者是'+proof.signer+'，但 '+id+' 的花费条件要求 '+utxo.owner+' 的授权。'};}
+  coins=coins.filter(c=>!tx.inputs.includes(c.id));const txid='tx'+serial++;tx.outputs.forEach((o,i)=>coins.push({id:txid+':'+i,owner:o.owner,sat:o.sat}));
+  return {ok:true,reason:'交易有效：消耗 '+tx.inputs.join('、')+'，创建 '+tx.outputs.map((o,i)=>txid+':'+i+' ('+o.owner+' '+f(o.sat)+' BTC)').join('、')+'。手续费 '+f(tx.fee)+' BTC。'};
+ }
+ function showResult(r){verdict(r.ok,r.reason);render();}
+ function balance(owner){return coins.filter(c=>c.owner===owner).reduce((v,c)=>v+c.sat,0)}
+ function render(){
+  $('myBal').textContent=f(balance('我'));$('wangBal').textContent=f(balance('小王'));$('count').textContent=coins.length;
+  $('ledger').innerHTML=coins.length?coins.map(c=>'<div class="coin"><div class="bubble">₿</div><div class="meta"><b>'+c.id+'</b><small>可花费的交易输出</small></div><span class="owner">'+c.owner+'</span><span class="amount">'+f(c.sat)+' BTC</span></div>').join(''):'<div class="empty">目前没有未花费输出</div>';
+  selected=selected.filter(id=>coins.some(c=>c.id===id));
+  $('inputChoices').innerHTML=coins.map(c=>'<label class="check"><input type="checkbox" value="'+c.id+'" '+(selected.includes(c.id)?'checked':'')+'/> '+c.id+' · '+c.owner+' · '+f(c.sat)+' BTC</label>').join('');
+  $('inputChoices').querySelectorAll('input').forEach(e=>e.addEventListener('change',()=>{if(e.checked){selected.push(e.value)}else{selected=selected.filter(x=>x!==e.value)};preview()}));preview();
+ }
+ function preview(){const total=selected.reduce((v,id)=>v+(coins.find(c=>c.id===id)?.sat||0),0);const amount=n($('value').value),fee=n($('fee').value);$('previewIn').textContent=f(total);$('previewOut').textContent=f(amount)+' / '+f(total-amount-fee)+' / '+f(fee);}
+ function reset(){coins=initial();serial=1;signed=null;selected=['txA:0','txB:0'];logItems=[];$('log').innerHTML='';$('recipient').value='小王';$('signer').value='我';$('value').value='0.6';$('fee').value='0.001';$('signStatus').textContent='尚未签名。请先点击“用所选私钥签名”。';$('result').className='result';$('result').innerHTML='<b>账本已重置</b>现在你可以重新开始实验。';render()}
+ function defaultTx(){return payload(['txA:0','txB:0'],'小王',n(.6),n(.001),'我')}
+ function runCase(which){reset();let tx=defaultTx();let proof={signer:'我',content:stamp(tx)},r;
+  if(which==='tamper'){tx.outputs[0].owner='黑客';r=apply(tx,proof);showResult(r);return}
+  r=apply(tx,proof);if(which==='legit'){showResult(r);return}
+  if(which==='double'){verdict(r.ok,'第一步：合法交易成功，原来的 txA:0、txB:0 已被消耗。');r=apply(tx,proof);showResult(r);return}
+  if(which==='steal'){verdict(r.ok,'第一步：先完成合法交易，小王获得 tx1:0。');let theft={inputs:['tx1:0'],outputs:[{owner:'我',sat:n(.599)}],fee:n(.001)};r=apply(theft,{signer:'我',content:stamp(theft)});showResult(r);return}
+ }
+ function draft(){return payload(selected,$('recipient').value,n($('value').value),n($('fee').value),$('signer').value)}
+ $('sign').addEventListener('click',()=>{let tx=draft();signed={signer:$('signer').value,content:stamp(tx)};$('signStatus').innerHTML='✓ 已用 <b>'+signed.signer+'</b> 的模拟私钥签名。签名快照已锁定；现在可改收款人，再点验证。';});
+ $('tamper').addEventListener('click',()=>{$('recipient').value='黑客';preview();$('signStatus').textContent=(signed?'交易已被修改，原签名不会自动更新。':'已修改收款人。尚未生成签名。')});
+ $('submit').addEventListener('click',()=>{let tx=draft();showResult(apply(tx,signed));if(logItems[0]?.ok){signed=null;$('signStatus').textContent='交易已提交。继续交易请重新签名。';}});
+ $('recipient').addEventListener('change',preview);$('signer').addEventListener('change',preview);$('value').addEventListener('input',preview);$('fee').addEventListener('input',preview);
+ $('reset').addEventListener('click',reset);
+ document.querySelectorAll('[data-case]').forEach(e=>e.addEventListener('click',()=>runCase(e.dataset.case)));
+ function tab(name){const free=name==='free';$('free').classList.toggle('hide',!free);$('examples').classList.toggle('hide',free);$('tabFree').classList.toggle('active',free);$('tabExamples').classList.toggle('active',!free)}
+ $('tabFree').addEventListener('click',()=>tab('free'));$('tabExamples').addEventListener('click',()=>tab('examples'));
+ render();
+})();
+</script></body></html>
